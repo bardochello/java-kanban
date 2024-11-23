@@ -30,7 +30,7 @@ public class Main {
         getFreedomSubTaskTwo.setStatus(Status.DONE);
         taskManager.updateSubtask(getFreedomSubTaskOne);
         taskManager.updateSubtask(getFreedomSubTaskTwo);
-        System.out.println(getFreedom.getSubtaskList());
+        System.out.println(taskManager.getEpicSubtasks(getFreedom));
         System.out.println(getFreedom);
 
         Epic getALife = new Epic("Начать новую жизнь", "С понедельника");
@@ -38,10 +38,9 @@ public class Main {
         System.out.println(getALife);
         SubTask getALifeSubTaskOne = new SubTask("Удалить доту", "Этим всё сказано", getALife.getId());
         taskManager.addSubtask(getALifeSubTaskOne);
-        getALifeSubTaskOne.setStatus(Status.DONE);
+        getALifeSubTaskOne.setStatus(Status.IN_PROGRESS);
         taskManager.updateSubtask(getALifeSubTaskOne);
-        System.out.println(getALife.getSubtaskList());
+        System.out.println(taskManager.getEpicSubtasks(getALife));
         System.out.println(getALife);
-
     }
 }

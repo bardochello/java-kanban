@@ -2,30 +2,31 @@ import java.util.ArrayList;
 
 public class Epic extends Task {
 
-    private ArrayList<SubTask> subtaskList = new ArrayList<>();
+    private ArrayList<Integer> subTasksId = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
     }
 
-    public Epic(String name, String description, int id, Status status) {
+    public Epic(String name, String description, int id, Status status, ArrayList<Integer> subTasksId) {
         super(name, description, id, status);
+        this.subTasksId = subTasksId;
     }
 
-    public void addSubtask(SubTask subtask) {
-        subtaskList.add(subtask);
+    public void addSubtasksId(int subTask) {
+        subTasksId.add(subTask);
     }
 
     public void clearSubtasks() {
-        subtaskList.clear();
+        subTasksId.clear();
     }
 
-    public ArrayList<SubTask> getSubtaskList() {
-        return subtaskList;
+    public ArrayList<Integer> getSubTasksId() {
+        return subTasksId;
     }
 
-    public void setSubtaskList(ArrayList<SubTask> subtaskList) {
-        this.subtaskList = subtaskList;
+    public void setSubtasksId(ArrayList<Integer> subTasksId) {
+        this.subTasksId = subTasksId;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class Epic extends Task {
                 "name: \'" + getName() + '\'' +
                 ", description: \'" + getDescription() + '\'' +
                 ", id: \'" + getId() +
-                ", subtaskList.size: \'" + subtaskList.size() +
+                ", subtaskList.size: \'" + subTasksId.size() +
                 ", status: " + getStatus() +
                 " },";
     }
