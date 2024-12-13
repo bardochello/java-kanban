@@ -1,6 +1,4 @@
-package data;
-
-import data.Status;
+package Tasks;
 
 import java.util.ArrayList;
 

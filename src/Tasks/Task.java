@@ -1,4 +1,4 @@
-package data;
+package Tasks;
 
 public class Task {
     private String name;

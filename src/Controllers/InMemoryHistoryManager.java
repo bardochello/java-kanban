@@ -1,10 +1,13 @@
-import data.Task;
+package Controllers;
+
+import Tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class InMemoryHistoryManager implements HistoryManager{
+public class InMemoryHistoryManager implements HistoryManager {
     private static final int MAX_SIZE = 10;
-    private ArrayList<Task> taskHistory = new ArrayList<>();
+    List<Task> taskHistory = new ArrayList<>();
 
     @Override
     public void add(Task task) {
@@ -20,7 +23,7 @@ public class InMemoryHistoryManager implements HistoryManager{
     }
 
     @Override
-    public ArrayList<Task> getHistory() {
-        return new ArrayList<>(taskHistory);
+    public List<Task> getHistory() {
+        return taskHistory;
     }
 }

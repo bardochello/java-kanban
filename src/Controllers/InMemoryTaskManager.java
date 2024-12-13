@@ -1,13 +1,16 @@
-import data.Epic;
-import data.Status;
-import data.SubTask;
-import data.Task;
+package Controllers;
+
+import Tasks.Epic;
+import Tasks.Status;
+import Tasks.SubTask;
+import Tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class InMemoryTaskManager implements TaskManager{
+public class InMemoryTaskManager implements TaskManager {
 
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
@@ -146,7 +149,7 @@ public class InMemoryTaskManager implements TaskManager{
     }
 
     @Override
-    public ArrayList<Task> getHistory() {
+    public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 

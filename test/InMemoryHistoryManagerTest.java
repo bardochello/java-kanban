@@ -1,7 +1,11 @@
+import Controllers.HistoryManager;
+import Controllers.Manager;
+import Tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,14 +23,14 @@ class InMemoryHistoryManagerTest {
     @Test
     public void add() {
         historyManager.add(task);
-        ArrayList<Task> history = historyManager.getHistory();
+        List<Task> history = historyManager.getHistory();
         assertNotNull(history, "History is null.");
         assertEquals(1, history.size(), "History is empty");
     }
 
     @Test
     public void checkMaxSizeHistory() {
-        ArrayList<Task> history;
+        List<Task> history;
 
         history = historyManager.getHistory();
         assertEquals(0, history.size(), "History is not empty");
@@ -47,7 +51,7 @@ class InMemoryHistoryManagerTest {
     @Test
     void checkEmptyHistory() {
         final ArrayList<Task> emptyArray = new ArrayList<>();
-        final ArrayList<Task> history = historyManager.getHistory();
+        final List<Task> history = historyManager.getHistory();
         assertNotNull(history, "История null.");
         assertEquals(history, emptyArray, "History is not empty");
         assertEquals(0, history.size(), "History is not empty");

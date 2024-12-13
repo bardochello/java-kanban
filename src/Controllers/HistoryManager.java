@@ -1,9 +1,11 @@
-import data.Task;
+package Controllers;
 
-import java.util.ArrayList;
+import Tasks.Task;
+
+import java.util.List;
 
 public interface HistoryManager {
     void add(Task task);
 
-    ArrayList<Task> getHistory();
+    List<Task> getHistory();
 }

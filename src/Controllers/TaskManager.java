@@ -1,8 +1,11 @@
-import data.Epic;
-import data.SubTask;
-import data.Task;
+package Controllers;
+
+import Tasks.Epic;
+import Tasks.SubTask;
+import Tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
     int addTask(Task task);
@@ -27,7 +30,7 @@ public interface TaskManager {
 
     public SubTask getSubtaskByID(int id);
 
-    public ArrayList<Task> getHistory();
+    public List<Task> getHistory();
 
     public ArrayList<Task> getTasks();
 

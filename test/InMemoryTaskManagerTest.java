@@ -1,3 +1,8 @@
+import Controllers.Manager;
+import Controllers.TaskManager;
+import Tasks.Epic;
+import Tasks.SubTask;
+import Tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +41,7 @@ class InMemoryTaskManagerTest {
     public void epicCantBeSubtaskForItself() {
         SubTask testSubTask = taskManager.getSubtaskByID(subTaskId);
         assertNotNull(testSubTask, "Subtask didn't find");
-        assertEquals(testSubTask.getEpicID(), epic.getId(), "Epic ID are not equals");
+        assertEquals(testSubTask.getEpicID(), epic.getId(), "data.Epic ID are not equals");
         assertNotEquals(testSubTask.getId(), epic.getId(), "ID equals");
     }
 
@@ -54,10 +59,10 @@ class InMemoryTaskManagerTest {
         Epic testTask = taskManager.getEpicByID(epicId);
         ArrayList<Epic> epics = taskManager.getEpics();
         Epic epicTest = taskManager.getEpicByID(epicId);
-        assertNotNull(testTask, "Epic didn't found");
+        assertNotNull(testTask, "data.Epic didn't found");
         assertEquals(epic, testTask, "Epics are not equals");
         assertNotNull(epics, "There are not epic");
-        assertNotNull(epicTest, "Epic can't be find by ID");
+        assertNotNull(epicTest, "data.Epic can't be find by ID");
     }
 
     @Test
@@ -74,7 +79,7 @@ class InMemoryTaskManagerTest {
         ArrayList<SubTask> subTasks = taskManager.getSubtasks();
         SubTask subTaskTest = taskManager.getSubtaskByID(subTaskId);
         assertNotNull(newSubTask, "Subtask didn't found");
-        assertNotNull(subTaskTest, "Epic can't be find by ID");
+        assertNotNull(subTaskTest, "data.Epic can't be find by ID");
         assertNotNull(subTasks, "Subtasks didn't find");
     }
 
@@ -90,7 +95,7 @@ class InMemoryTaskManagerTest {
     public void addTask() {
         Task taskTest = taskManager.getTaskByID(taskId);
         ArrayList<Task> tasks = taskManager.getTasks();
-        assertNotNull(taskTest, "Task didn't find");
+        assertNotNull(taskTest, "data.Task didn't find");
         assertNotNull(tasks, "Tasks didn't find");
     }
 
