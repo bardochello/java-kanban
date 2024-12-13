@@ -1,3 +1,5 @@
+import data.Task;
+
 import java.util.ArrayList;
 
 public class InMemoryHistoryManager implements HistoryManager{

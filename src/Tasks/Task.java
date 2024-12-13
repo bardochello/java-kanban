@@ -1,4 +1,4 @@
-import java.util.Objects;
+package data;
 
 public class Task {
     private String name;
@@ -75,7 +75,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "data.Task{" +
                 "name:\'" + name + '\'' +
                 ", description: \'" + description + '\'' +
                 ", id: " + id +

@@ -1,5 +1,8 @@
+import data.Epic;
+import data.SubTask;
+import data.Task;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public interface TaskManager {
     int addTask(Task task);

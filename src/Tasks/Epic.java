@@ -1,3 +1,7 @@
+package data;
+
+import data.Status;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {
@@ -31,7 +35,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
+        return "data.Epic{" +
                 "name: \'" + getName() + '\'' +
                 ", description: \'" + getDescription() + '\'' +
                 ", id: \'" + getId() +
