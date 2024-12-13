@@ -1,22 +1,21 @@
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Manager.getDefault();
         Task buyHouse = new Task("Купить дом", "Без мам, пап и кредитов");
-        Task buyHouseTask = taskManager.addTask(buyHouse);
-        System.out.println(buyHouseTask);
+        int buyHouseTask = taskManager.addTask(buyHouse);
 
         Task watchMovie = new Task("Посмотреть фильм", "Посмотреть фильм \"Бивень\"");
-        Task learnEnglishTask = taskManager.addTask(watchMovie);
-        System.out.println(learnEnglishTask);
+        int learnEnglishTask = taskManager.addTask(watchMovie);
 
         Task updateBuyHouse = new Task("Купить трехэтажный дом", "C помощью мамы, папы и с кредитом", buyHouse.getId(), Status.IN_PROGRESS);
         Task updatedBuyHouse = taskManager.updateTask(updateBuyHouse);
         System.out.println(updatedBuyHouse);
 
         Task updateWatchMovie = new Task("Посмотреть фильм", "Посмотреть фильм \"Свадебная ваза\"", watchMovie.getId(), Status.DONE);
-        Task updatedWatchMovie = taskManager.addTask(updateWatchMovie);
-        System.out.println(updatedWatchMovie);
+        int updatedWatchMovie = taskManager.addTask(updateWatchMovie);
 
 
         Epic getFreedom = new Epic("Обрести свободу", "Сделать как можно быстрее");
@@ -42,5 +41,10 @@ public class Main {
         taskManager.updateSubtask(getALifeSubTaskOne);
         System.out.println(taskManager.getEpicSubtasks(getALife));
         System.out.println(getALife);
+
+        System.out.println("Смотрим историю: ");
+        taskManager.getTaskByID(1);
+        System.out.println(taskManager.getHistory());
+
     }
 }
