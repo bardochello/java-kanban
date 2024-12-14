@@ -32,13 +32,13 @@ public interface TaskManager {
 
     public List<Task> getHistory();
 
-    public ArrayList<Task> getTasks();
+    public List<Task> getTasks();
 
-    public ArrayList<Epic> getEpics();
+    public List<Epic> getEpics();
 
-    public ArrayList<SubTask> getSubtasks();
+    public List<SubTask> getSubtasks();
 
-    public ArrayList<SubTask> getEpicSubtasks(Epic epic);
+    public List<SubTask> getEpicSubtasks(Epic epic);
 
     public void deleteTasks();
 

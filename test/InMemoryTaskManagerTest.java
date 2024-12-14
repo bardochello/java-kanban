@@ -6,7 +6,7 @@ import Tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,7 +57,7 @@ class InMemoryTaskManagerTest {
     @Test
     public void addEpic() {
         Epic testTask = taskManager.getEpicByID(epicId);
-        ArrayList<Epic> epics = taskManager.getEpics();
+        List<Epic> epics = taskManager.getEpics();
         Epic epicTest = taskManager.getEpicByID(epicId);
         assertNotNull(testTask, "data.Epic didn't found");
         assertEquals(epic, testTask, "Epics are not equals");
@@ -76,7 +76,7 @@ class InMemoryTaskManagerTest {
     @Test
     public void addSubTask() {
         SubTask newSubTask = taskManager.getSubtaskByID(subTaskId);
-        ArrayList<SubTask> subTasks = taskManager.getSubtasks();
+        List<SubTask> subTasks = taskManager.getSubtasks();
         SubTask subTaskTest = taskManager.getSubtaskByID(subTaskId);
         assertNotNull(newSubTask, "Subtask didn't found");
         assertNotNull(subTaskTest, "data.Epic can't be find by ID");
@@ -94,7 +94,7 @@ class InMemoryTaskManagerTest {
     @Test
     public void addTask() {
         Task taskTest = taskManager.getTaskByID(taskId);
-        ArrayList<Task> tasks = taskManager.getTasks();
+        List<Task> tasks = taskManager.getTasks();
         assertNotNull(taskTest, "data.Task didn't find");
         assertNotNull(tasks, "Tasks didn't find");
     }
