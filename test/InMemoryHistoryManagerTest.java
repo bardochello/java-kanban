@@ -1,6 +1,6 @@
-import Controllers.HistoryManager;
-import Controllers.Manager;
-import Tasks.Task;
+import controllers.HistoryManager;
+import controllers.Manager;
+import tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
