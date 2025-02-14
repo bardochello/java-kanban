@@ -2,13 +2,13 @@ package controllers;
 
 import tasks.Task;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public interface HistoryManager {
+public interface HistoryManager { //интерфейс истории задач
 
-    void add(Task task);
+    void add(Task task); //метод добавляющий просмотренную задачу в историю просмотров
 
-    void remove(int id);
+    void remove(int id); //метод для удаления задачи из истории просмотров
 
-    ArrayList<Task> getHistory();
+    List<Task> getHistory(); //метод для возвращения просмотренных задач
 }

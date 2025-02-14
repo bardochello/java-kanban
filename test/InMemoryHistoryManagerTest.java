@@ -64,7 +64,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void checkEmptyHistory() {
-        final ArrayList<Task> emptyArray = new ArrayList<>();
+        final List<Task> emptyArray = new ArrayList<>();
         final List<Task> history = historyManager.getHistory();
         assertNotNull(history, "History is null.");
         assertEquals(history, emptyArray, "History is not empty");
@@ -73,7 +73,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void checkAddOneTaskTwice() {
-        ArrayList<Task> history;
+        List<Task> history;
         history = historyManager.getHistory();
         assertEquals(0, history.size(), "History is not empty.");
         historyManager.add(task1);
@@ -88,7 +88,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void checkDeleteLastTask() { //проверяем удаление из истории
-        ArrayList<Task> history;
+        List<Task> history;
         history = historyManager.getHistory();
         assertEquals(0, history.size(), "History is incorrect");
         historyManager.add(task1);
@@ -105,7 +105,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void checkGetTaskListOrder() {
-        ArrayList<Task> history;
+        List<Task> history;
 
 
         history = historyManager.getHistory();

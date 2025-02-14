@@ -18,19 +18,19 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private final Map<Integer, Node> taskHistoryMap = new HashMap<>();
-    private Node head;
-    private Node tail;
+    private Node head; //ссылка на первый элемент списка
+    private Node tail; //ссылка на последний элемент списка
 
 
     @Override
-    public void add(Task task) {
-        if (task == null) {
+    public void add(Task task) { //метод добавления задачи в taskHistoryMap
+        if (task == null) { //Если добавляемая задача равна null, то выходим из метода
             return;
         }
 
 
-        remove(task.getId());
-        linkLast(task);
+        remove(task.getId()); //если задача есть в списке, то удаляем ее
+        linkLast(task); //добавляем задачу в конец taskHistoryMap
     }
 
     @Override
@@ -38,7 +38,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         removeNode(taskHistoryMap.get(id));
     }
 
-    public void removeNode(Node node) {
+    public void removeNode(Node node) { //метод удаления задачи из taskHistoryMap
         if (node == null) {
             return;
         }
@@ -61,7 +61,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public ArrayList<Task> getHistory() {
+    public List<Task> getHistory() {
         return getTasks();
     }
 
@@ -78,8 +78,8 @@ public class InMemoryHistoryManager implements HistoryManager {
         taskHistoryMap.put(task.getId(), newNode);
     }
 
-    private ArrayList<Task> getTasks() {
-        ArrayList<Task> nodeTasks = new ArrayList<>();
+    private List<Task> getTasks() {
+        List<Task> nodeTasks = new ArrayList<>();
         Node current = head;
         while (current != null) {
             nodeTasks.add(current.data);
