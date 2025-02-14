@@ -5,10 +5,6 @@ import tasks.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private Map<Integer, Node> taskHistoryMap = new HashMap<>();
-    private Node head;
-    private Node tail;
-
     private static class Node {
         public Task data;
         public Node next;
@@ -21,13 +17,19 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
+    private final Map<Integer, Node> taskHistoryMap = new HashMap<>();
+    private Node head;
+    private Node tail;
+
+
     @Override
     public void add(Task task) {
         if (task == null) {
             return;
         }
 
-        removeNode(taskHistoryMap.get(task.getId()));
+
+        remove(task.getId());
         linkLast(task);
     }
 
@@ -41,21 +43,21 @@ public class InMemoryHistoryManager implements HistoryManager {
             return;
         }
 
-        Node curPrevNode = node.prev;
-        Node curNextNode = node.next;
+        // Удаляем узел из связного списка
+        if (node.prev != null) {
+            node.prev.next = node.next;
+        } else {
+            head = node.next;
+        }
+
+        if (node.next != null) {
+            node.next.prev = node.prev;
+        } else {
+            tail = node.prev;
+        }
+
+        // Удаляем задачу из мапы
         taskHistoryMap.remove(node.data.getId());
-
-        if (curNextNode != null) {
-            curNextNode.prev = curPrevNode;
-        } else {
-            tail = curPrevNode;
-        }
-
-        if (curPrevNode != null) {
-            curPrevNode.next = curNextNode;
-        } else {
-            head = curNextNode;
-        }
     }
 
     @Override
@@ -78,11 +80,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private ArrayList<Task> getTasks() {
         ArrayList<Task> nodeTasks = new ArrayList<>();
-        Node nextNode = head;
-
-        while (nextNode != null) {
-            nodeTasks.add(nextNode.data);
-            nextNode = taskHistoryMap.get(nextNode.data.getId()).next;
+        Node current = head;
+        while (current != null) {
+            nodeTasks.add(current.data);
+            current = current.next;
         }
 
         return nodeTasks;
