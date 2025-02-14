@@ -1,6 +1,6 @@
-import Controllers.HistoryManager;
-import Controllers.Manager;
-import Controllers.TaskManager;
+import controllers.HistoryManager;
+import controllers.Manager;
+import controllers.TaskManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

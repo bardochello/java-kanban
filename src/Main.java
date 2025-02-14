@@ -1,9 +1,9 @@
-import Controllers.Manager;
-import Controllers.TaskManager;
-import Tasks.Epic;
-import Tasks.Status;
-import Tasks.SubTask;
-import Tasks.Task;
+import controllers.Manager;
+import controllers.TaskManager;
+import tasks.Epic;
+import tasks.Status;
+import tasks.SubTask;
+import tasks.Task;
 
 public class Main {
 

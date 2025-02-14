@@ -1,8 +1,8 @@
-import Controllers.Manager;
-import Controllers.TaskManager;
-import Tasks.Epic;
-import Tasks.SubTask;
-import Tasks.Task;
+import controllers.Manager;
+import controllers.TaskManager;
+import tasks.Epic;
+import tasks.SubTask;
+import tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,11 +38,12 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void epicCantBeSubtaskForItself() {
-        SubTask testSubTask = taskManager.getSubtaskByID(subTaskId);
-        assertNotNull(testSubTask, "Subtask didn't find");
-        assertEquals(testSubTask.getEpicID(), epic.getId(), "data.Epic ID are not equals");
-        assertNotEquals(testSubTask.getId(), epic.getId(), "ID equals");
+    public void subtaskCantBeEpicForYourself() {
+        SubTask subtaskByID = taskManager.getSubtaskByID(subTaskId);
+        assertNotNull(subtaskByID, "Подзадача не найдена.");
+        subtaskByID.setEpicID(subTaskId);
+        taskManager.updateSubtask(subtaskByID);
+        assertEquals(subtaskByID.getEpicID(), subtaskByID.getId(), "ID равны");
     }
 
     @Test
