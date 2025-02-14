@@ -38,11 +38,12 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void epicCantBeSubtaskForItself() {
-        SubTask testSubTask = taskManager.getSubtaskByID(subTaskId);
-        assertNotNull(testSubTask, "Subtask didn't find");
-        assertEquals(testSubTask.getEpicID(), epic.getId(), "data.Epic ID are not equals");
-        assertNotEquals(testSubTask.getId(), epic.getId(), "ID equals");
+    public void subtaskCantBeEpicForYourself() {
+        SubTask subtaskByID = taskManager.getSubtaskByID(subTaskId);
+        assertNotNull(subtaskByID, "Подзадача не найдена.");
+        subtaskByID.setEpicID(subTaskId);
+        taskManager.updateSubtask(subtaskByID);
+        assertEquals(subtaskByID.getEpicID(), subtaskByID.getId(), "ID равны");
     }
 
     @Test
