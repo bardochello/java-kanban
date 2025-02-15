@@ -1,5 +1,7 @@
 package tasks;
 
+import java.lang.reflect.Type;
+
 public class Task {
     private String name;
     private String description;

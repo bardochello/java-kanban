@@ -28,8 +28,8 @@ public class Main {
         System.out.println(getFreedom);
         SubTask getFreedomSubTaskOne = new SubTask("Познакомиться с Тайлером Дерденом", "Желательно не в самолете", getFreedom.getId());
         SubTask getFreedomSubTaskTwo = new SubTask("Потерять всё", "Лишь потеряв всё, мы приобретаем свободу", getFreedom.getId());
-        taskManager.addSubtask(getFreedomSubTaskOne);
-        taskManager.addSubtask(getFreedomSubTaskTwo);
+        taskManager.addTask(getFreedomSubTaskOne);
+        taskManager.addTask(getFreedomSubTaskTwo);
         getFreedomSubTaskOne.setStatus(Status.DONE);
         getFreedomSubTaskTwo.setStatus(Status.DONE);
         taskManager.updateSubtask(getFreedomSubTaskOne);
@@ -41,7 +41,7 @@ public class Main {
         taskManager.addEpic(getALife);
         System.out.println(getALife);
         SubTask getALifeSubTaskOne = new SubTask("Удалить доту", "Этим всё сказано", getALife.getId());
-        taskManager.addSubtask(getALifeSubTaskOne);
+        taskManager.addTask(getALifeSubTaskOne);
         getALifeSubTaskOne.setStatus(Status.IN_PROGRESS);
         taskManager.updateSubtask(getALifeSubTaskOne);
         System.out.println(taskManager.getEpicSubtasks(getALife));
