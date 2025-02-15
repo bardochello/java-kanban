@@ -3,6 +3,8 @@ import controllers.HistoryManager;
 import controllers.Manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tasks.TaskType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
@@ -19,13 +21,13 @@ class InMemoryHistoryManagerTest {
     @BeforeEach
     public void beforeEach() {
         historyManager = Manager.getDefaultHistory();
-        task1 = new Task("task1", "task description");
+        task1 = new Task("task1", "task description", TaskType.TASK);
         task1.setId(0);
-        task2 = new Task("task2", "task2 description");
+        task2 = new Task("task2", "task2 description", TaskType.TASK);
         task2.setId(1);
-        task3 = new Task("task3", "task3 description");
+        task3 = new Task("task3", "task3 description", TaskType.TASK);
         task3.setId(2);
-        task4 = new Task("task4", "task4 description");
+        task4 = new Task("task4", "task4 description", TaskType.TASK);
         task4.setId(3);
     }
 
@@ -45,7 +47,7 @@ class InMemoryHistoryManagerTest {
         assertEquals(0, history.size(), "History is not empty");
 
         for (int i = 1; i <= MAX_SIZE; i++) {
-            task1 = new Task("task" + i, "task" + i);
+            task1 = new Task("task" + i, "task" + i, TaskType.TASK);
             task1.setId(i);
             historyManager.add(task1);
         }
@@ -54,7 +56,7 @@ class InMemoryHistoryManagerTest {
         assertNotNull(history, "History is null.");
         assertEquals(MAX_SIZE, history.size(), "History size was changed");
 
-        task1 = new Task("task", "task");
+        task1 = new Task("task", "task", TaskType.TASK);
         historyManager.add(task1);
         history = historyManager.getHistory();
         assertNotNull(history, "History is null.");

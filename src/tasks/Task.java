@@ -1,25 +1,25 @@
 package tasks;
 
-import java.lang.reflect.Type;
-
 public class Task {
     private String name;
     private String description;
     private int id;
-
     private Status status;
+    private TaskType type; // Добавляем поле для типа задачи
 
-    public Task(String name, String description, int id, Status status) {
+    public Task(String name, String description, int id, Status status, TaskType type) {
         this.name = name;
         this.description = description;
         this.id = id;
         this.status = status;
+        this.type = type;
     }
 
-    public Task(String name, String description) {
+    public Task(String name, String description, TaskType type) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
+        this.type = type;
     }
 
     public String getName() {
@@ -52,6 +52,14 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public TaskType getType() {
+        return type;
+    }
+
+    public void setType(TaskType type) {
+        this.type = type;
     }
 
     @Override

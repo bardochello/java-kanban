@@ -31,8 +31,8 @@ class FileBackedTaskManagerTest {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
 
         // Добавляем задачи
-        Task task = new Task("Task 1", "Description 1");
-        Epic epic = new Epic("Epic 1", "Description 1");
+        Task task = new Task("Task 1", "Description 1", TaskType.TASK);
+        Epic epic = new Epic("Epic 1", "Description 1", TaskType.EPIC);
         SubTask subtask = new SubTask("Subtask 1", "Description 1", epic.getId());
         manager.addTask(task);
         manager.addEpic(epic);

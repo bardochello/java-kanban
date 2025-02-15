@@ -5,6 +5,7 @@ import tasks.SubTask;
 import tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tasks.TaskType;
 
 import java.util.List;
 
@@ -23,9 +24,9 @@ class InMemoryTaskManagerTest {
     @BeforeEach
     public void beforeEach() {
         taskManager = Manager.getDefault();
-        task = new Task("task1", "task1 description");
+        task = new Task("task1", "task1 description", TaskType.TASK);
 
-        epic = new Epic("epic1", "epic1 description");
+        epic = new Epic("epic1", "epic1 description", TaskType.EPIC);
         epicId = taskManager.addTask(epic);
 
 
