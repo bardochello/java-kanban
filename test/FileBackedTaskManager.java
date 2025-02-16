@@ -16,7 +16,7 @@ class FileBackedTaskManagerTest {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
 
         // Сохраняем пустой менеджер
-        manager.save();
+        manager.deleteTasks(); //метод deleteTasks хранит в себе приватный метод save();
 
         // Загружаем из файла
         FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(file);
