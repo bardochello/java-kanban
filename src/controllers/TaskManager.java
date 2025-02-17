@@ -1,8 +1,8 @@
-package Controllers;
+package controllers;
 
-import Tasks.Epic;
-import Tasks.SubTask;
-import Tasks.Task;
+import tasks.Epic;
+import tasks.SubTask;
+import tasks.Task;
 import java.util.List;
 
 public interface TaskManager {
@@ -13,8 +13,6 @@ public interface TaskManager {
     int addTask(Epic epic);
 
     public Epic addEpic(Epic epic);
-
-    public SubTask addSubtask(SubTask subtask);
 
     public Task updateTask(Task task);
 

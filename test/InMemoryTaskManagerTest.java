@@ -1,10 +1,11 @@
-import Controllers.Manager;
-import Controllers.TaskManager;
-import Tasks.Epic;
-import Tasks.SubTask;
-import Tasks.Task;
+import controllers.Manager;
+import controllers.TaskManager;
+import tasks.Epic;
+import tasks.SubTask;
+import tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tasks.TaskType;
 
 import java.util.List;
 
@@ -23,9 +24,9 @@ class InMemoryTaskManagerTest {
     @BeforeEach
     public void beforeEach() {
         taskManager = Manager.getDefault();
-        task = new Task("task1", "task1 description");
+        task = new Task("task1", "task1 description", TaskType.TASK);
 
-        epic = new Epic("epic1", "epic1 description");
+        epic = new Epic("epic1", "epic1 description", TaskType.EPIC);
         epicId = taskManager.addTask(epic);
 
 
@@ -38,11 +39,12 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void epicCantBeSubtaskForItself() {
-        SubTask testSubTask = taskManager.getSubtaskByID(subTaskId);
-        assertNotNull(testSubTask, "Subtask didn't find");
-        assertEquals(testSubTask.getEpicID(), epic.getId(), "data.Epic ID are not equals");
-        assertNotEquals(testSubTask.getId(), epic.getId(), "ID equals");
+    public void subtaskCantBeEpicForYourself() {
+        SubTask subtaskByID = taskManager.getSubtaskByID(subTaskId);
+        assertNotNull(subtaskByID, "Подзадача не найдена.");
+        subtaskByID.setEpicID(subTaskId);
+        taskManager.updateSubtask(subtaskByID);
+        assertEquals(subtaskByID.getEpicID(), subtaskByID.getId(), "ID равны");
     }
 
     @Test

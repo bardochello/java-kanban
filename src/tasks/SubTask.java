@@ -1,16 +1,16 @@
-package Tasks;
+package tasks;
 
 public class SubTask extends Task {
 
     private int epicID;
 
     public SubTask(String name, String description, int epicID) {
-        super(name, description);
+        super(name, description, TaskType.SUBTASK); // Указываем тип задачи
         this.epicID = epicID;
     }
 
     public SubTask(String name, String description, int id, Status status, int epicID) {
-        super(name, description, id, status);
+        super(name, description, id, status, TaskType.SUBTASK); // Указываем тип задачи
         this.epicID = epicID;
     }
 
