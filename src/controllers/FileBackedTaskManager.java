@@ -101,29 +101,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-    private void save() { //метод сохраняет текущее состояние менеджера задач в файл. Данные хранятся в формате CSV
-        try {
-            List<String> lines = new ArrayList<>();
-            lines.add("id,type,name,status,description,epic"); // Заголовок CSV
-
-            // Сохраняем задачи
-            for (Task task : getTasks()) {
-                lines.add(taskToString(task));
-            }
-            for (Epic epic : getEpics()) {
-                lines.add(taskToString(epic));
-            }
-            for (SubTask subtask : getSubtasks()) {
-                lines.add(taskToString(subtask));
-            }
-
-            // Записываем в файл
-            Files.write(file.toPath(), lines);
-        } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при сохранении в файл", e);
-        }
-    }
-
     // Метод для загрузки менеджера из файла
     public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
@@ -148,6 +125,29 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             throw new ManagerSaveException("Ошибка при загрузке из файла", e);
         }
         return manager;
+    }
+
+    private void save() { //метод сохраняет текущее состояние менеджера задач в файл. Данные хранятся в формате CSV
+        try {
+            List<String> lines = new ArrayList<>();
+            lines.add("id,type,name,status,description,epic"); // Заголовок CSV
+
+            // Сохраняем задачи
+            for (Task task : getTasks()) {
+                lines.add(taskToString(task));
+            }
+            for (Epic epic : getEpics()) {
+                lines.add(taskToString(epic));
+            }
+            for (SubTask subtask : getSubtasks()) {
+                lines.add(taskToString(subtask));
+            }
+
+            // Записываем в файл
+            Files.write(file.toPath(), lines);
+        } catch (IOException e) {
+            throw new ManagerSaveException("Ошибка при сохранении в файл", e);
+        }
     }
 
     //Метод преобразует задачу в CSV
