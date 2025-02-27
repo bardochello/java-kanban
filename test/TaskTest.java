@@ -8,9 +8,9 @@ class TaskTest {
     @Test
     public void TasksWithSameIdShouldBeEquals() {
         int taskId = 1;
-        Task task1 = new Task("task1", "task1 description", TaskType.TASK);
+        Task task1 = new Task("task1", "task1 description", TaskType.TASK, null, null);
         task1.setId(taskId);
-        Task task2 = new Task("task2", "task2 description", TaskType.TASK);
+        Task task2 = new Task("task2", "task2 description", TaskType.TASK, null, null);
         task2.setId(taskId);
         assertEquals(task1, task2, "Tasks are not equals");
     }

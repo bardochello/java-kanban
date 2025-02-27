@@ -22,6 +22,8 @@ public interface TaskManager {
 
     public Task getTaskByID(int id);
 
+    List<Task> getPrioritizedTasks();
+
     public Epic getEpicByID(int id);
 
     public SubTask getSubtaskByID(int id);
