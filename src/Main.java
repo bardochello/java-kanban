@@ -1,55 +1,35 @@
-import Controllers.Manager;
-import Controllers.TaskManager;
-import Tasks.Epic;
-import Tasks.Status;
-import Tasks.SubTask;
-import Tasks.Task;
+import controllers.Manager;
+import controllers.TaskManager;
+import tasks.*;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class Main {
-
     public static void main(String[] args) {
         TaskManager taskManager = Manager.getDefault();
-        Task buyHouse = new Task("Купить дом", "Без мам, пап и кредитов");
+
+        Task buyHouse = new Task("Купить дом", "Без мам, пап и кредитов", TaskType.TASK, Duration.ofMinutes(60), LocalDateTime.now());
         int buyHouseTask = taskManager.addTask(buyHouse);
 
-        Task watchMovie = new Task("Посмотреть фильм", "Посмотреть фильм \"Бивень\"");
-        int learnEnglishTask = taskManager.addTask(watchMovie);
+        Task watchMovie = new Task("Посмотреть фильм", "Посмотреть фильм \"Бивень\"", TaskType.TASK, Duration.ofMinutes(90), LocalDateTime.now().plusHours(2));
+        int watchMovieTask = taskManager.addTask(watchMovie);
 
-        Task updateBuyHouse = new Task("Купить трехэтажный дом", "C помощью мамы, папы и с кредитом", buyHouse.getId(), Status.IN_PROGRESS);
-        Task updatedBuyHouse = taskManager.updateTask(updateBuyHouse);
-        System.out.println(updatedBuyHouse);
-
-        Task updateWatchMovie = new Task("Посмотреть фильм", "Посмотреть фильм \"Свадебная ваза\"", watchMovie.getId(), Status.DONE);
-        int updatedWatchMovie = taskManager.addTask(updateWatchMovie);
-
+        System.out.println("Prioritized Tasks: " + taskManager.getPrioritizedTasks());
 
         Epic getFreedom = new Epic("Обрести свободу", "Сделать как можно быстрее");
         taskManager.addEpic(getFreedom);
-        System.out.println(getFreedom);
-        SubTask getFreedomSubTaskOne = new SubTask("Познакомиться с Тайлером Дерденом", "Желательно не в самолете", getFreedom.getId());
-        SubTask getFreedomSubTaskTwo = new SubTask("Потерять всё", "Лишь потеряв всё, мы приобретаем свободу", getFreedom.getId());
-        taskManager.addSubtask(getFreedomSubTaskOne);
-        taskManager.addSubtask(getFreedomSubTaskTwo);
-        getFreedomSubTaskOne.setStatus(Status.DONE);
-        getFreedomSubTaskTwo.setStatus(Status.DONE);
-        taskManager.updateSubtask(getFreedomSubTaskOne);
-        taskManager.updateSubtask(getFreedomSubTaskTwo);
-        System.out.println(taskManager.getEpicSubtasks(getFreedom));
-        System.out.println(getFreedom);
+        SubTask freedomSub1 = new SubTask("Познакомиться с Тайлером", "Не в самолете", getFreedom.getId(), Duration.ofMinutes(30), LocalDateTime.now().plusDays(1));
+        SubTask freedomSub2 = new SubTask("Потерять всё", "Лишь потеряв всё...", getFreedom.getId(), Duration.ofMinutes(45), LocalDateTime.now().plusDays(1).plusHours(1));
+        taskManager.addTask(freedomSub1);
+        taskManager.addTask(freedomSub2);
+        freedomSub1.setStatus(Status.DONE);
+        freedomSub2.setStatus(Status.IN_PROGRESS);
+        taskManager.updateSubtask(freedomSub1);
+        taskManager.updateSubtask(freedomSub2);
+        System.out.println("Epic Freedom: " + getFreedom);
+        System.out.println("Subtasks: " + taskManager.getEpicSubtasks(getFreedom));
 
-        Epic getALife = new Epic("Начать новую жизнь", "С понедельника");
-        taskManager.addEpic(getALife);
-        System.out.println(getALife);
-        SubTask getALifeSubTaskOne = new SubTask("Удалить доту", "Этим всё сказано", getALife.getId());
-        taskManager.addSubtask(getALifeSubTaskOne);
-        getALifeSubTaskOne.setStatus(Status.IN_PROGRESS);
-        taskManager.updateSubtask(getALifeSubTaskOne);
-        System.out.println(taskManager.getEpicSubtasks(getALife));
-        System.out.println(getALife);
-
-        System.out.println("Смотрим историю: ");
-        taskManager.getTaskByID(1);
-        System.out.println(taskManager.getHistory());
-
+        System.out.println("Prioritized Tasks: " + taskManager.getPrioritizedTasks());
     }
 }
