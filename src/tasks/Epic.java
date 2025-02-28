@@ -12,14 +12,15 @@ public class Epic extends Task {
     //Конструкторы
     public Epic(String name, String description) {
         super(name, description, TaskType.EPIC, Duration.ZERO, null);
-        this.subTasksId = new ArrayList<>();
+        this.subTasksId = new ArrayList<>(); // Инициализация пустым списком
         this.endTime = null;
     }
 
-    public Epic(String name, String description, int id, Status status, Duration duration, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Integer> subTasksId) {
+    public Epic(String name, String description, int id, Status status, Duration duration,
+                LocalDateTime startTime, LocalDateTime endTime, List<Integer> subTasksId) {
         super(name, description, id, status, TaskType.EPIC, duration, startTime);
         this.endTime = endTime;
-        this.subTasksId = subTasksId;
+        this.subTasksId = (subTasksId != null) ? subTasksId : new ArrayList<>(); // Защита от null
     }
 
     //методы для работы с подзадачами
@@ -36,8 +37,8 @@ public class Epic extends Task {
         return subTasksId;
     }
 
-    public void setSubtasksId(ArrayList<Integer> subTasksId) {
-        this.subTasksId = subTasksId;
+    public void setSubTasksId(List<Integer> subTasksId) {
+        this.subTasksId = (subTasksId != null) ? subTasksId : new ArrayList<>();
     }
 
     public LocalDateTime getEndTime() {
