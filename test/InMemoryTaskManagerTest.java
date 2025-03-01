@@ -1,108 +1,76 @@
-import Controllers.Manager;
-import Controllers.TaskManager;
-import Tasks.Epic;
-import Tasks.SubTask;
-import Tasks.Task;
+import controllers.Manager;
+import controllers.TaskManager;
+import tasks.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
     TaskManager taskManager;
     Epic epic;
-    SubTask subTask;
+    SubTask subTask1;
+    SubTask subTask2;
     Task task;
-    int subTaskId;
-    int epicId;
-    int taskId;
-
+    LocalDateTime now;
 
     @BeforeEach
     public void beforeEach() {
         taskManager = Manager.getDefault();
-        task = new Task("task1", "task1 description");
+        now = LocalDateTime.now();
+        task = new Task("task1", "task1 description", TaskType.TASK, Duration.ofMinutes(60), now);
+        taskManager.addTask(task);
 
         epic = new Epic("epic1", "epic1 description");
-        epicId = taskManager.addTask(epic);
-
-
-        taskId = taskManager.addTask(task);
-
         taskManager.addEpic(epic);
 
-        subTask = new SubTask("subtask1", "subtask1 description", 4);
-        subTaskId = taskManager.addTask(subTask);
+        subTask1 = new SubTask("subtask1", "subtask1 description", epic.getId(), Duration.ofMinutes(30), now.plusHours(1));
+        subTask2 = new SubTask("subtask2", "subtask2 description", epic.getId(), Duration.ofMinutes(45), now.plusHours(2));
+        taskManager.addTask(subTask1);
+        taskManager.addTask(subTask2);
     }
 
     @Test
-    public void epicCantBeSubtaskForItself() {
-        SubTask testSubTask = taskManager.getSubtaskByID(subTaskId);
-        assertNotNull(testSubTask, "Subtask didn't find");
-        assertEquals(testSubTask.getEpicID(), epic.getId(), "data.Epic ID are not equals");
-        assertNotEquals(testSubTask.getId(), epic.getId(), "ID equals");
+    public void testEpicStatusWithAllNewSubtasks() {
+        assertEquals(Status.NEW, epic.getStatus(), "Epic status should be NEW with all NEW subtasks");
     }
 
     @Test
-    public void subtaskCantBeEpicForItself() {
-        SubTask subtaskByID = taskManager.getSubtaskByID(subTaskId);
-        assertNotNull(subtaskByID, "Подзадача не найдена.");
-        subtaskByID.setEpicID(subTaskId);
-        taskManager.updateSubtask(subtaskByID);
-        assertEquals(subtaskByID.getEpicID(), subtaskByID.getId(), "ID равны");
+    public void testEpicStatusWithAllDoneSubtasks() {
+        subTask1.setStatus(Status.DONE);
+        subTask2.setStatus(Status.DONE);
+        taskManager.updateSubtask(subTask1);
+        taskManager.updateSubtask(subTask2);
+        assertEquals(Status.DONE, epic.getStatus(), "Epic status should be DONE with all DONE subtasks");
     }
 
     @Test
-    public void addEpic() {
-        Epic testTask = taskManager.getEpicByID(epicId);
-        List<Epic> epics = taskManager.getEpics();
-        Epic epicTest = taskManager.getEpicByID(epicId);
-        assertNotNull(testTask, "data.Epic didn't found");
-        assertEquals(epic, testTask, "Epics are not equals");
-        assertNotNull(epics, "There are not epic");
-        assertNotNull(epicTest, "data.Epic can't be find by ID");
+    public void testEpicStatusWithMixedSubtasks() {
+        subTask1.setStatus(Status.DONE);
+        subTask2.setStatus(Status.NEW);
+        taskManager.updateSubtask(subTask1);
+        taskManager.updateSubtask(subTask2);
+        assertEquals(Status.IN_PROGRESS, epic.getStatus(), "Epic status should be IN_PROGRESS with mixed subtasks");
     }
 
     @Test
-    public void epicNotChange() {
-        Epic epicById = taskManager.getEpicByID(epicId);
-        assertEquals(epic.getName(), epicById.getName(), "Names are not equals");
-        assertEquals(epic.getDescription(), epicById.getDescription(), "Descriptions are not equals");
-    }
-
-
-    @Test
-    public void addSubTask() {
-        SubTask newSubTask = taskManager.getSubtaskByID(subTaskId);
-        List<SubTask> subTasks = taskManager.getSubtasks();
-        SubTask subTaskTest = taskManager.getSubtaskByID(subTaskId);
-        assertNotNull(newSubTask, "Subtask didn't found");
-        assertNotNull(subTaskTest, "data.Epic can't be find by ID");
-        assertNotNull(subTasks, "Subtasks didn't find");
+    public void testEpicFieldsCalculation() {
+        assertEquals(now.plusHours(1), epic.getStartTime(), "Epic start time should match earliest subtask");
+        assertEquals(Duration.ofMinutes(75), epic.getDuration(), "Epic duration should sum subtask durations");
+        assertEquals(now.plusHours(2).plusMinutes(45), epic.getEndTime(), "Epic end time should match latest subtask");
     }
 
     @Test
-    public void subtaskNotChange() {
-        SubTask testSubTask = taskManager.getSubtaskByID(subTaskId);
-        assertEquals(subTask.getName(), testSubTask.getName(), "Names are not equals");
-        assertEquals(subTask.getDescription(), testSubTask.getDescription(), "Descriptions are not equals");
-        assertEquals(subTask.getEpicID(), testSubTask.getEpicID(), "Epics are not equals");
+    public void testPrioritizedTasks() {
+        List<Task> prioritized = taskManager.getPrioritizedTasks();
+        assertEquals(List.of(task, subTask1, subTask2), prioritized, "Tasks should be prioritized by start time");
     }
 
     @Test
-    public void addTask() {
-        Task taskTest = taskManager.getTaskByID(taskId);
-        List<Task> tasks = taskManager.getTasks();
-        assertNotNull(taskTest, "data.Task didn't find");
-        assertNotNull(tasks, "Tasks didn't find");
-    }
-
-    @Test
-    public void taskNotChange() {
-        Task taskTest = taskManager.getTaskByID(taskId);
-        assertEquals(task.getName(), taskTest.getName(), "Names are not equals");
-        assertEquals(task.getDescription(), taskTest.getDescription(), "Descriptions are not equals");
+    public void testTaskOverlap() {
+        Task overlappingTask = new Task("overlap", "desc", TaskType.TASK, Duration.ofMinutes(30), now.plusMinutes(30));
+        assertThrows(IllegalArgumentException.class, () -> taskManager.addTask(overlappingTask), "Should throw exception on time overlap");
     }
 }

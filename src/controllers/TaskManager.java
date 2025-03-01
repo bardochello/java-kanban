@@ -1,8 +1,8 @@
-package Controllers;
+package controllers;
 
-import Tasks.Epic;
-import Tasks.SubTask;
-import Tasks.Task;
+import tasks.Epic;
+import tasks.SubTask;
+import tasks.Task;
 import java.util.List;
 
 public interface TaskManager {
@@ -14,8 +14,6 @@ public interface TaskManager {
 
     public Epic addEpic(Epic epic);
 
-    public SubTask addSubtask(SubTask subtask);
-
     public Task updateTask(Task task);
 
     public void updateEpic(Epic epic);
@@ -23,6 +21,8 @@ public interface TaskManager {
     public void updateSubtask(SubTask subtask);
 
     public Task getTaskByID(int id);
+
+    List<Task> getPrioritizedTasks();
 
     public Epic getEpicByID(int id);
 
