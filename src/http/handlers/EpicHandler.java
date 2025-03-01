@@ -3,6 +3,7 @@ package http.handlers;
 import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpExchange;
 import controllers.TaskManager;
+import http.HttpMethod;
 import tasks.Epic;
 import tasks.NotFoundException;
 
@@ -20,10 +21,10 @@ public class EpicHandler extends BaseHttpHandler {
         String path = exchange.getRequestURI().getPath();
 
         try {
-            if ("GET".equals(method) && "/epics".equals(path)) {
+            if (HttpMethod.GET.equals(method) && "/epics".equals(path)) {
                 List<Epic> epics = taskManager.getEpics();
                 sendText(exchange, gson.toJson(epics), 200);
-            } else if ("POST".equals(method) && "/epics".equals(path)) {
+            } else if (HttpMethod.POST.equals(method) && "/epics".equals(path)) {
                 String requestBody = new String(exchange.getRequestBody().readAllBytes());
                 Epic epic = gson.fromJson(requestBody, Epic.class);
                 if (epic.getId() == 0) {
@@ -33,7 +34,7 @@ public class EpicHandler extends BaseHttpHandler {
                     taskManager.updateEpic(epic);
                     sendText(exchange, "{\"message\":\"Эпик обновлен\"}", 200);
                 }
-            } else if ("DELETE".equals(method) && path.startsWith("/epics/")) {
+            } else if (HttpMethod.DELETE.equals(method) && path.startsWith("/epics/")) {
                 int id = Integer.parseInt(path.substring("/epics/".length()));
                 taskManager.deleteEpicByID(id);
                 sendText(exchange, "{\"message\":\"Эпик удален\"}", 200);

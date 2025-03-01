@@ -3,6 +3,7 @@ package http.handlers;
 import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpExchange;
 import controllers.TaskManager;
+import http.HttpMethod;
 import tasks.NotFoundException;
 import tasks.Task;
 
@@ -20,10 +21,10 @@ public class TaskHandler extends BaseHttpHandler {
         String path = exchange.getRequestURI().getPath();
 
         try {
-            if ("GET".equals(method) && "/tasks".equals(path)) {
+            if (HttpMethod.GET.equals(method) && "/tasks".equals(path)) {
                 List<Task> tasks = taskManager.getTasks();
                 sendText(exchange, gson.toJson(tasks), 200);
-            } else if ("POST".equals(method) && "/tasks".equals(path)) {
+            } else if (HttpMethod.POST.equals(method) && "/tasks".equals(path)) {
                 String requestBody = new String(exchange.getRequestBody().readAllBytes());
                 Task task = gson.fromJson(requestBody, Task.class);
                 if (task.getId() == 0) {
@@ -33,7 +34,7 @@ public class TaskHandler extends BaseHttpHandler {
                     taskManager.updateTask(task);
                     sendText(exchange, "{\"message\":\"Задача обновлена\"}", 200);
                 }
-            } else if ("DELETE".equals(method) && path.startsWith("/tasks/")) {
+            } else if (HttpMethod.DELETE.equals(method) && path.startsWith("/tasks/")) {
                 int id = Integer.parseInt(path.substring("/tasks/".length()));
                 taskManager.deleteTaskByID(id);
                 sendText(exchange, "{\"message\":\"Задача удалена\"}", 200);

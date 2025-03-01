@@ -12,26 +12,19 @@ import java.time.LocalDateTime;
 import java.time.Duration;
 
 public class HttpTaskServer {
-    private final HttpServer server;
-    private final TaskManager taskManager;
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
             .registerTypeAdapter(Duration.class, new DurationAdapter()) // Добавляем адаптер для Duration
             .setPrettyPrinting()
             .create();
 
+    private final HttpServer server;
+    private final TaskManager taskManager;
+
     public HttpTaskServer(TaskManager taskManager) throws IOException {
         this.taskManager = taskManager;
         this.server = HttpServer.create(new InetSocketAddress(8080), 0);
         registerHandlers();
-    }
-
-    private void registerHandlers() {
-        server.createContext("/tasks", new TaskHandler(taskManager));
-        server.createContext("/subtasks", new SubtaskHandler(taskManager));
-        server.createContext("/epics", new EpicHandler(taskManager));
-        server.createContext("/history", new HistoryHandler(taskManager));
-        server.createContext("/prioritized", new PrioritizedHandler(taskManager));
     }
 
     public void start() {
@@ -57,5 +50,13 @@ public class HttpTaskServer {
             System.err.println("Ошибка при запуске сервера: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void registerHandlers() {
+        server.createContext("/tasks", new TaskHandler(taskManager));
+        server.createContext("/subtasks", new SubtaskHandler(taskManager));
+        server.createContext("/epics", new EpicHandler(taskManager));
+        server.createContext("/history", new HistoryHandler(taskManager));
+        server.createContext("/prioritized", new PrioritizedHandler(taskManager));
     }
 }

@@ -32,12 +32,12 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int addTask(SubTask subTask) {
         if (subTask.getStartTime() != null && hasOverlap(subTask)) { //проверка на пересечение
-            throw new IllegalArgumentException("SubTask overlaps with existing tasks");
+            throw new IllegalArgumentException("Подзадача пересекается с существующей подзадачей");
         }
         int taskId = getID();
         subTask.setId(taskId);
         subtasks.put(taskId, subTask);
-        if (subTask.getEpicID() >= 0 && findEpic(subTask.getEpicID())) {
+        if (findEpic(subTask.getEpicID())) {
             Epic epic = epics.get(subTask.getEpicID());
             epic.addSubtasksId(taskId);
             updateEpicFields(epic);
@@ -79,7 +79,7 @@ public class InMemoryTaskManager implements TaskManager {
             if (oldTask != null) {
                 prioritizedTasks.add(oldTask);
             }
-            throw new IllegalArgumentException("Updated task overlaps with existing tasks");
+            throw new IllegalArgumentException("Обновляемая задача пересекается с существующей задачей");
         }
         tasks.put(taskID, task);
         updatePrioritizedTasks(task);
@@ -119,7 +119,7 @@ public class InMemoryTaskManager implements TaskManager {
                 existingSubTask.setStatus(oldStatus);
                 existingSubTask.setDuration(oldDuration);
                 existingSubTask.setStartTime(oldStartTime);
-                throw new IllegalArgumentException("Updated subtask overlaps with existing tasks");
+                throw new IllegalArgumentException("Обновляемая подзадача пересекается с существующей задачей");
             }
 
             updatePrioritizedTasks(existingSubTask);

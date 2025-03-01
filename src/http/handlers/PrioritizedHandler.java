@@ -2,6 +2,7 @@ package http.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import controllers.TaskManager;
+import http.HttpMethod;
 import tasks.Task;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class PrioritizedHandler extends BaseHttpHandler {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
 
-        if ("GET".equals(method) && "/prioritized".equals(path)) {
+        if (HttpMethod.GET.equals(method) && "/prioritized".equals(path)) {
             List<Task> prioritized = taskManager.getPrioritizedTasks();
             sendText(exchange, gson.toJson(prioritized), 200);
         } else {
